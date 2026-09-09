@@ -9,14 +9,21 @@
 
             #region q1 
             //a) well the other variable will get the copy of value from the DeliveryAddress variable cuz we are here dealing with a struct 
-            
+
             //b) the other variable well get the reference value from the Customer Variable cuz we are here dealinmg with a class so anything
             //affect the other variable will also affect the class variable . 
 
+            #endregion  
+
+
+            #region q2 
+            //a) 1- the access modifiers that are used is punlic .
+               //2- there is no validation for the user input .
+               //3- there is no properties to deal with the fielsd through (seters , geters) .
+
+
+            //b) it will gave a limited access to the user on those fields .
             #endregion 
-
-
-
 
 
             #endregion
