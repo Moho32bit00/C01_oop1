@@ -24,7 +24,186 @@
                 return $"City : {City}\nStreet : {Street}\nBuilding Number : {BuildingNumber}\n";
             }
         }
-        #endregion 
+        #endregion
+
+
+        #region Shipment
+        public struct Shipment
+        {
+            private string trackingCode;
+            private string description;
+            private decimal weight;
+            private decimal deliveryFee;
+
+            #region It should also contain a public property:
+            //public DeliveryAddress Destination { get; set; }
+            #endregion 
+
+            #region Apply proper encapsulation using public properties with the following validation rules
+            //public string TrackingCode
+            //{
+            //    get { return trackingCode; }
+            //    set
+            //    {
+            //        if (value != null && value != "" && value != " ")
+            //        {
+            //            trackingCode = value;
+            //        }
+            //    }
+            //}
+            //public string Description
+            //{
+            //    get
+            //    {
+            //        return description;
+            //    }
+            //    set
+            //    {
+            //        if (value != null && value != "" && value != " ")
+            //        {
+            //            description = value;
+            //        }
+            //    }
+            //}
+            //public decimal DeliveryFee
+            //{
+            //    get { return deliveryFee; }
+
+            //    set
+            //    {
+            //        if (value > 0)
+            //        {
+            //            deliveryFee = value;
+            //        }
+            //    }
+            //}
+            //public decimal Weight
+            //{
+            //    get { return weight; }
+
+            //    set
+            //    {
+            //        if (value > 0)
+            //        {
+            //            weight = value;
+            //        }
+            //    }
+            //}
+
+            #endregion
+
+            #region Add the following properties:
+
+            public string TrackingCode { get; }
+
+            public string Description
+            {
+                get
+                {
+                    return description;
+                }
+                set
+                {
+                    if (value != null && value != "" && value != " ")
+                    {
+                        description = value;
+                    }
+                }
+            }
+
+            public decimal Weight
+            {
+                get { return weight; }
+
+                set
+                {
+                    if (value > 0)
+                    {
+                        weight = value;
+                    }
+                }
+            }
+
+            public decimal DeliveryFee
+            {
+                get { return deliveryFee; }
+
+                private set
+                {
+                    if (value > 0)
+                    {
+                        deliveryFee = value;
+                    }
+                }
+            }
+
+            public DeliveryAddress Destination { get; set; }
+
+            public decimal EstimatedCost {
+                get {
+                    return deliveryFee + (weight * 5) ;
+                } 
+            }
+            #endregion
+
+            #region Add constructor overloading to Shipment:
+            Shipment(string trackingCode)
+            {
+                this.trackingCode= trackingCode;
+                Description = "Unknown";
+                Weight = 1;
+                DeliveryFee = 50;
+                Destination = new DeliveryAddress
+                {
+                    City = "Unknown",
+                    Street = "Unknown",
+                    BuildingNumber = 0
+                };
+            }
+            Shipment(string trackingCode , string description , decimal weight , decimal deliveryFee , DeliveryAddress destination)
+            {
+                this.trackingCode=trackingCode;
+                this.description=description;
+                this.weight=weight;
+                this.deliveryFee=deliveryFee;   
+                Destination = destination;
+            }
+
+            #endregion
+
+
+            #region Add the following methods to Shipment:
+            public void UpdateDeliveryFee(decimal newFee)
+            {
+                if (newFee > 0)
+                {
+                    deliveryFee = newFee;
+                }
+            }
+
+            public void PrintShipment()
+            {
+                Console.Write($"Distenation : \nCity : {Destination.City}\nStreet : {Destination.Street}\nBuilding Number : " +
+                    $"{Destination.BuildingNumber}\nTracking Code : {trackingCode}\nDescription : {description}\nWeight : {weight}\nDelivery Fee : {deliveryFee}" +
+                    $"estimated cost : {EstimatedCost}\n");
+            }
+            #endregion
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         static void Main(string[] args)
         {
