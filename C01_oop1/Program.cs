@@ -2,17 +2,17 @@
 {
     internal class Program
     {
-        #region DeliveryAddress
+        #region DeliveryAddress struct 
         public struct DeliveryAddress
         {
             public string City { set; get; }
             public string Street { set; get; }
             public int BuildingNumber { set; get; }
 
-                
 
 
-            DeliveryAddress(string city , string Street, int buildingNumber)
+
+            DeliveryAddress(string city, string Street, int buildingNumber)
             {
                 this.City = city;
                 this.Street = Street;
@@ -27,7 +27,7 @@
         #endregion
 
 
-        #region Shipment
+        #region Shipment struct
         public struct Shipment
         {
             private string trackingCode;
@@ -139,17 +139,19 @@
 
             public DeliveryAddress Destination { get; set; }
 
-            public decimal EstimatedCost {
-                get {
-                    return deliveryFee + (weight * 5) ;
-                } 
+            public decimal EstimatedCost
+            {
+                get
+                {
+                    return deliveryFee + (weight * 5);
+                }
             }
             #endregion
 
             #region Add constructor overloading to Shipment:
             Shipment(string trackingCode)
             {
-                this.trackingCode= trackingCode;
+                this.trackingCode = trackingCode;
                 Description = "Unknown";
                 Weight = 1;
                 DeliveryFee = 50;
@@ -160,12 +162,12 @@
                     BuildingNumber = 0
                 };
             }
-            Shipment(string trackingCode , string description , decimal weight , decimal deliveryFee , DeliveryAddress destination)
+            Shipment(string trackingCode, string description, decimal weight, decimal deliveryFee, DeliveryAddress destination)
             {
-                this.trackingCode=trackingCode;
-                this.description=description;
-                this.weight=weight;
-                this.deliveryFee=deliveryFee;   
+                this.trackingCode = trackingCode;
+                this.description = description;
+                this.weight = weight;
+                this.deliveryFee = deliveryFee;
                 Destination = destination;
             }
 
@@ -191,22 +193,70 @@
         }
         #endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        static void Main(string[] args)
+        #region DeliveryCenter struct
+        public struct DeliveryCenter
         {
+
+            private Shipment[] shipment = new Shipment[10];
+            public DeliveryCenter() { this.shipment = null; }
+            public DeliveryCenter(Shipment[] shpment)
+            {
+                this.shipment = shpment;
+            }
+            public Shipment this[int index]
+            {
+                get
+                {
+                    if (index >= 0 && index < shipment.Length)
+                    {
+                        return shipment[index];
+                    }
+                    else { return default; ; }
+                }
+                set
+                {
+                    if (index >= 0 && index < shipment.Length)
+                    {
+                        shipment[index] = value;
+                    }
+                }
+            }
+
+            public Shipment this[string TrackingCode]
+            {
+                get
+                {
+                    for (int i = 0; i < shipment.Length; i++)
+                    {
+                        if (shipment[i].TrackingCode == TrackingCode)
+                        {
+                            return shipment[i];
+                        }
+
+                    }
+                    return default;
+                }
+            }
+
+            public bool AddShipment(Shipment s_shipment)
+            {
+                for (int i = 0; i < shipment.Length; i++)
+                {
+                    if (shipment[i].TrackingCode == null)
+                    {
+                        shipment[i] = s_shipment;
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+
+        }
+        #endregion
+
+            static void Main(string[] args)
+            {
 
             #region Part 01 : Theoretical Questions
 
@@ -241,6 +291,8 @@
             //Console.WriteLine(d1.Street);
             //Console.WriteLine(str);
             #endregion
+
+            
             #endregion
         }
     }
